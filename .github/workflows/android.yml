@@ -5,25 +5,20 @@ workflow_dispatch:
 
 jobs:
 android-test:
-
-```
 runs-on: ubuntu-latest
 
 steps:
-
   - name: Checkout Repository
     uses: actions/checkout@v4
 
   - name: Start Android Emulator
     uses: reactivecircus/android-emulator-runner@v2
-
     with:
       api-level: 34
       arch: x86_64
       profile: pixel_7
 
       script: |
-
         adb devices
 
         adb install apk/app.apk
@@ -35,4 +30,3 @@ steps:
         adb shell screencap -p /sdcard/screen.png
 
         adb pull /sdcard/screen.png
-```
