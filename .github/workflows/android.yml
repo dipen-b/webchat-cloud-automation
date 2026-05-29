@@ -1,56 +1,15 @@
 name: Android Automation
 
 on:
-workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
 
-android-test:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-runs-on: ubuntu-latest
-
-steps:
-
-  - name: Checkout Repository
-    uses: actions/checkout@v4
-
-  - name: Set up Java
-    uses: actions/setup-java@v4
-    with:
-      distribution: 'temurin'
-      java-version: '17'
-
-  - name: Start Emulator and Run APK
-    uses: reactivecircus/android-emulator-runner@v2
-
-    with:
-      api-level: 34
-      arch: x86_64
-      profile: pixel_7
-
-      script: |
-
-        adb devices
-
-        echo "Installing APK"
-
-        adb install apk/app.apk
-
-        echo "Launching App"
-
-        adb shell monkey -p com.web.messenger.dual.chat -c android.intent.category.LAUNCHER 1
-
-        echo "Waiting"
-
-        sleep 40
-
-        adb shell screencap -p /sdcard/final.png
-
-        adb pull /sdcard/final.png
-
-  - name: Upload Screenshot
-    uses: actions/upload-artifact@v4
-
-    with:
-      name: final-screen
-      path: final.png
+      - name: Hello
+        run: echo "Automation Started"
